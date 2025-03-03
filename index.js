@@ -1,4 +1,4 @@
-const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";  // Replace with your bot token
+const TELEGRAM_BOT_TOKEN = "8045028721:AAFcTq9XNm5hAQlPXVtJcSEGPwOLoR4OOOM";  // Replace with your bot token
 
 export default {
   async fetch(request) {

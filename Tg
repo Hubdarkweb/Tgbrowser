@@ -1,0 +1,35 @@
+const TELEGRAM_BOT_TOKEN = "8045028721:AAFcTq9XNm5hAQlPXVtJcSEGPwOLoR4OOOM";  // Replace with your bot token
+const WEB_APP_URL = "https://plain-sun-d17c.lorinekylie.workers.dev/";  // Replace with your Cloudflare web app URL
+
+export default {
+  async fetch(request) {
+    if (request.method === "POST") {
+      const update = await request.json();
+
+      if (update.message) {
+        const chatId = update.message.chat.id;
+
+        await sendTelegramMessage(chatId, {
+          text: "Click the button below to search anonymously:",
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: "🔍 Open Search Web App", web_app: { url: WEB_APP_URL } }],
+            ],
+          },
+        });
+      }
+    }
+    return new Response("OK", { status: 200 });
+  },
+};
+
+async function sendTelegramMessage(chatId, messageObj) {
+  const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+  const body = JSON.stringify({ chat_id: chatId, ...messageObj });
+
+  await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body,
+  });
+}
